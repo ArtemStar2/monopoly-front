@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import GameBackground from './../assets/images/Game-Background.png';
-import { Unity, useUnityContext } from 'react-unity-webgl';
+import { Unity, useUnityContext  } from 'react-unity-webgl';
 import  { useEffect, useCallback, useRef, useState } from 'react';
 import { useOutside, useWindowSize,useCookie,profileUsers } from '../hooks/hooks';
 import Navbar from '../components/Navbar';
@@ -44,7 +44,7 @@ const Home = () => {
     codeUrl: '/Build/MonopolyBuild.wasm',
     streamingAssetsUrl: 'StreamingAssets',
     companyName: 'DefaultCompany',
-    // productName: 'Metamonopoly',
+    productName: 'Metamonopoly',
     productVersion: '1.0',
   });
   function getGet(name:any){
@@ -56,7 +56,7 @@ const Home = () => {
   }
   function ConnectUser(lobby:any, roll:any){
     console.log( lobby + ":" + roll);
-    sendMessage("ApiClient", 'SetData', lobby + ":" + roll);
+    sendMessage("ApiClient", "SetData", lobby + ":" + roll);
   }
   const loadingPercentage: number = Math.round(loadingProgression * 100);
 
