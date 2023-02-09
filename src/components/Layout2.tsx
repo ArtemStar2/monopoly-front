@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Outlet, useOutletContext } from 'react-router-dom';
+import { Outlet, useOutletContext,useNavigate } from 'react-router-dom';
 import { useAppSelector, useOutside, useWeb3Helper } from '../hooks/hooks';
 import Header from './Header';
 import Navbar from './Navbar';
@@ -7,6 +7,7 @@ import transactionSuccessful from './../assets/images/transaction-successful.png
 import arrowLeft from './../assets/images/Arrow-.png';
 import { ethers } from 'ethers';
 import { profileUsers,useCookie } from '../hooks/hooks';
+
 const Layout2 = (buff:any) => {
   const [
     refDepositFunds,
@@ -211,45 +212,39 @@ const Layout2 = (buff:any) => {
   
   const [activePrivate, setActivePrivate] = useState(false);
   const createLobby = async () => {
-    var score = '0';
     let userBet = lobbyPrice;
     if(userBet){
-      const formData = new FormData();
-      formData.append('ownerScore', score);
-      formData.append('ownerBet', userBet);
-      formData.append('code', lobbyCode);
-      formData.append('link', linkCode);
-      fetch('https://api.monopoly-dapp.com/lobby/', { 
+      fetch('https://api.monopoly-dapp.com/lobby/?link=' + linkCode, { 
         method: 'POST',
         headers: {
             'accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
             'Authorization': token,
         },
-        body: formData,
-        // body: 'ownerScore=' + score + 'ownerBet=' + userBet + 'code=' + lobbyCode + 'link=' + linkCode,
-        // body: JSON.stringify({
-        //   'ownerScore': score,
-        //   'ownerBet': userBet,
-        //   'code': lobbyCode,
-        //   'link': linkCode,
-        // })
+        body: JSON.stringify({
+          'bet': lobbyPrice,
+          'password': lobbyCode,
+        })
       })
       .then(response => response.json())
       .then(json => {
-        setLobbyCode('');
-        setLinkCode(generateUUID());
-        setLobbyPrice('');
-        setActivePrivate(false);
-        setIsShowCreateYourRoom(false);
-        console.log(json);
+        if(!json.detail){
+          setLobbyCode('');
+          setLinkCode(generateUUID());
+          setLobbyPrice('');
+          setActivePrivate(false);
+          setIsShowCreateYourRoom(false);
+          console.log(json);
+          startGame(json.id, 'owner');
+        }else{
+          alert(json.detail);
+        }
       });
     }else{
       console.log('error');
     }
   }
   const Private = () => {
-    
     if(activePrivate){
       setLobbyCode('');
     }else{
@@ -259,20 +254,18 @@ const Layout2 = (buff:any) => {
   }
   
   const [connectLobbyCode, setConnectLobbyCode] = useState('');
-  const connectLobby = async () => {
-    let code = connectLobbyCode;
-    let idConnect = 0;
-    if(connectLobbyCode.length == 10 && buff.buff.lobbyId){
-      fetch('https://api.monopoly-dapp.com/lobby/?lobby_id='+ buff.buff.lobbyId, { 
-        method: 'PUT',
+  
+  const connectLobby = async () => {    
+      fetch('https://api.monopoly-dapp.com/lobby/play/?link='+ buff.buff.lobbyId, { 
+        method: 'POST',
         headers: {
             'accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': token,
         },
         body: JSON.stringify({
-          'opponentBet': 1,
-          'code': code,
+          'bet': buff.buff.bet,
+          'password': connectLobbyCode,
         })
       })
       .then(response => response.json())
@@ -280,18 +273,21 @@ const Layout2 = (buff:any) => {
         if(json.detail){
           console.error('error: ' + json.detail);
         }else{
-          startGame();
-          setConnectLobbyCode('');
-          console.error('Play');
-          console.error(json);
+          if(isShowAreYouReady){
+            console.log(json);
+            startGame(buff.buff.lobbyId, 'opponent');
+            setConnectLobbyCode('');
+          }else{
+            openPrivateGamePopup(false);
+            toggleAreYouReadyPopup(true);
+          }
         }
       });
-    }else{
-      console.error(buff);
-    }
+
   }
-  const startGame = async () => {
-    alert('Start');
+  const navigate = useNavigate();
+  const startGame = async (id:any,roll:string) => {
+    navigate("/?lobby=" + id + "?status=" + roll);
   }
   return (
     <>
@@ -430,7 +426,7 @@ const Layout2 = (buff:any) => {
             <span>You</span>
             <span>Ready?</span>
           </h2>
-          <button onClick={startGame}>Play Now {buff.buff.bet} ETH</button>
+          <button onClick={connectLobby}>Play Now {buff.buff.bet} ETH</button>
         </div>
       </div>
 

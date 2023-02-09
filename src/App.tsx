@@ -20,7 +20,6 @@ function App() {
   // const isAuth = useAppSelector((state) => state.authReducer.isAuth);
   const [buff, setBuff] = useState('');
   const { setUsersData } = profileSlice.actions;
-  
   // console.log(isAuth);
   // get current price eth to usd
   useEffect(() => {

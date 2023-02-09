@@ -39,9 +39,10 @@ const Lobby = (dataLobby :any) => {
           setLobby(json);
         }
       });
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
+  console.log(lobby);
   return (
     <section className="section lobby">
       <div className="lobby__container">
@@ -75,8 +76,14 @@ const Lobby = (dataLobby :any) => {
               </div>
             </div>
             {lobby.length > 0 ? (
-              lobby.map((data, index) =>
-                <LobbyItem data={dataLobby.funbuff} user={userId} key={index} prors={data} />
+              lobby.map((data, index) => {
+                if(data){
+                  return(
+                    <LobbyItem data={dataLobby.funbuff} user={userId} key={index} prors={data} />
+                  )
+                }
+              }
+                
               )
             ) : (
               <div></div>

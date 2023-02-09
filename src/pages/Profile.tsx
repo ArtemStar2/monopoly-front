@@ -26,7 +26,6 @@ const Profile = (state:any) => {
       })
       .then(response => response.json())
       .then(json => {
-        console.log(json);
         setUsers(json);
         setName(json.username);
         setImage(json.avatar);
@@ -53,17 +52,17 @@ const Profile = (state:any) => {
         });
         state.deleteCookie();
         dispatch(setIsAuth(false));
-        fetch('https://api.monopoly-dapp.com/friends/', { 
-          method: 'GET',
-          headers: {
-              'accept': 'application/json',
-              'Authorization': token,
-          },
-        })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json);
-        });
+        // fetch('https://api.monopoly-dapp.com/friends/', { 
+        //   method: 'GET',
+        //   headers: {
+        //       'accept': 'application/json',
+        //       'Authorization': token,
+        //   },
+        // })
+        // .then(response => response.json())
+        // .then(json => {
+        //   console.log(json);
+        // });
       } catch (error) {
         console.log(error);
       }

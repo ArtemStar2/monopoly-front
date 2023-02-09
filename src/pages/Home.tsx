@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import GameBackground from './../assets/images/Game-Background.png';
 import { Unity, useUnityContext } from 'react-unity-webgl';
 import  { useEffect, useCallback, useRef, useState } from 'react';
-import { useOutside, useWindowSize,useCookie } from '../hooks/hooks';
+import { useOutside, useWindowSize,useCookie,profileUsers } from '../hooks/hooks';
 import Navbar from '../components/Navbar';
 import Lobby from './Lobby';
 
@@ -47,19 +47,20 @@ const Home = () => {
     // productName: 'Metamonopoly',
     productVersion: '1.0',
   });
-  const token: any = useCookie('refresh_token_cookie','')[0].split(' ')[1];
-  var strGET = window.location.search.replace( '?', '').split('='); 
+  function getGet(name:any){
+    var s = window.location.search.match(new RegExp(name + '=([^&=]+)'));
+    return s ? s[1] : false;
+  }
 
-  console.log(strGET);
-  var LobbyId = "";
-  if(strGET[0] == "lobby"){
-    LobbyId = strGET[1] ;
+  if(getGet("lobby")){
+    console.log(getGet("lobby") + ':' + getGet("status"));
+    // ConnectUser(strGET[1], strGET[4]);
   }
-  
+  function ConnectUser(lobby:string, roll:string){
+    sendMessage("ApiClient", 'SetData', lobby + ":" + roll);
+  }
   const loadingPercentage: number = Math.round(loadingProgression * 100);
-  function ConnectUser(){
-      sendMessage("ApiClient", 'SetData', LobbyId + ":" +token);
-  }
+  
 
   const detailGame = useCallback((bool:boolean) => {
     console.log(bool);
@@ -86,7 +87,7 @@ const Home = () => {
           <button></button>
         </div>
       </div>
-      <button onClick={() => ConnectUser()}>Start</button>
+      <button onClick={() => ConnectUser('93f9f23c-c4f6-4cd0-b55c-e98a588a8467', 'owner')}>Start</button>
       <div id="unity-container" className="unity-desktop" ref={unityContainerRef}>
         
         <Unity
