@@ -41,7 +41,7 @@ function App() {
       }),
     );
   }, []);
-  
+  console.log('asdasdasd');
   return (
     <Routes>
     {value ? (
