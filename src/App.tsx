@@ -48,7 +48,7 @@ function App() {
       <Route path="" element={<Layout />}>
         <Route path="" element={<Layout2 buff={buff} />}>
           <Route path="" element={<Lobby funbuff={setBuff} />} />
-          <Route path="lobby" element={<Home />} />
+          <Route path="game" element={<Home />} />
           <Route path="invite-friends" element={<InviteFriends />} />
           <Route path="leaderboard" element={<Leaderboard />} />
           <Route path="profile" element={<Profile deleteCookie={deleteCookie}/>} />

@@ -27,7 +27,7 @@ const Navbar: FC<INavbar> = ({ refNavbar, isShowNavbar, toggleNavbar }) => {
               <Link className="navbar__link " to="" onClick={() => toggleNavbar(false)}></Link>
             </li>
             <li>
-              <Link className="navbar__link " to="lobby" onClick={() => toggleNavbar(false)}></Link>
+              <Link className="navbar__link " to="game" onClick={() => toggleNavbar(false)}></Link>
             </li>
             <li>
               <Link className="navbar__link " to="#" onClick={() => toggleNavbar(false)}></Link>
