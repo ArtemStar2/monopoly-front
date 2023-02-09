@@ -22,6 +22,7 @@ function App() {
   const { setUsersData } = profileSlice.actions;
   // console.log(isAuth);
   // get current price eth to usd
+  console.log('asdasds');
   useEffect(() => {
     fetch('https://api.monopoly-dapp.com/users/', { 
       headers: {
