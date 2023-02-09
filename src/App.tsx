@@ -41,7 +41,7 @@ function App() {
       }),
     );
   }, []);
-  console.log('asdasdasd');
+  console.log('ура');
   return (
     <Routes>
     {value ? (
