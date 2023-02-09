@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { profileSlice } from '../store/reducers/profileReducer';
 import { authSlice } from '../store/reducers/authReducer';
-import {  useWeb3Helper } from '../hooks/hooks';
+import {  useWeb3Helper,useAppDispatch } from '../hooks/hooks';
 
 declare global {
   interface Window {
@@ -20,6 +20,8 @@ declare global {
 const Register = (state: any) => {
   const { connectWalletProvider } = useWeb3Helper();
   const params = new URLSearchParams(window.location.search).get('userfriend');
+  const { setUsersData } = profileSlice.actions;
+  const dispatch = useAppDispatch();
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
@@ -37,7 +39,18 @@ const Register = (state: any) => {
         .then(response => response.json())
         .then(json => {
           if(json.token && json.type){
-            state.updateCookie(json.type + ' ' + json.token);  
+            state.updateCookie(json.type + ' ' + json.token); 
+            fetch('https://api.monopoly-dapp.com/users/', { 
+              headers: {
+                  'accept': 'application/json',
+                  'Authorization': json.type + ' ' + json.token,
+              },
+            })
+            .then(response => response.json())
+            .then(json => {
+              console.log(json);
+              dispatch(setUsersData(json));
+            });
           }else{
             console.log('error: ' + json.detail);
           }

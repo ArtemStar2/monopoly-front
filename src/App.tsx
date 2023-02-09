@@ -21,18 +21,21 @@ function App() {
   const { setUsersData } = profileSlice.actions;
   // console.log(isAuth);
   // get current price eth to usd
-  console.log('dfsdfsd');
   useEffect(() => {
-    fetch('https://api.monopoly-dapp.com/users/', { 
-      headers: {
-          'accept': 'application/json',
-          'Authorization': value,
-      },
-    })
-    .then(response => response.json())
-    .then(json => {
-      dispatch(setUsersData(json));
-    });
+    if(value){
+      fetch('https://api.monopoly-dapp.com/users/', { 
+        headers: {
+            'accept': 'application/json',
+            'Authorization': value,
+        },
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        dispatch(setUsersData(json));
+      });
+    }
+    
     dispatch(
       fetchCurrencies({
         from: 'ETH',
