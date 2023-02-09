@@ -42,7 +42,6 @@ const Lobby = (dataLobby :any) => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  console.log(lobby);
   return (
     <section className="section lobby">
       <div className="lobby__container">

@@ -37,7 +37,7 @@ const Home = () => {
     }
   }, [windowWidth, windowHeight]);
 
-  const { unityProvider, isLoaded, loadingProgression, sendMessage, addEventListener, removeEventListener } = useUnityContext({
+  const { unityProvider, isLoaded, loadingProgression, sendMessage } = useUnityContext({
     loaderUrl: '/Build/MonopolyBuild.loader.js',
     dataUrl: '/Build/MonopolyBuild.data',
     frameworkUrl: '/Build/MonopolyBuild.framework.js',
@@ -49,29 +49,17 @@ const Home = () => {
   });
   function getGet(name:any){
     var s = window.location.search.match(new RegExp(name + '=([^&=]+)'));
-    return s ? s[1] : false;
+    return s ? s[1] : '';
   }
-
-  if(getGet("lobby")){
-    console.log(getGet("lobby") + ':' + getGet("status"));
-    // ConnectUser(strGET[1], strGET[4]);
+  if(getGet("lobby") && isLoaded){
+    ConnectUser(getGet("lobby").split('?')[0], getGet("status"));
   }
-  function ConnectUser(lobby:string, roll:string){
+  function ConnectUser(lobby:any, roll:any){
+    console.log( lobby + ":" + roll);
     sendMessage("ApiClient", 'SetData', lobby + ":" + roll);
   }
   const loadingPercentage: number = Math.round(loadingProgression * 100);
-  
 
-  const detailGame = useCallback((bool:boolean) => {
-    console.log(bool);
-  }, []);
-
-  useEffect(() => {
-    addEventListener("detailGame", detailGame);
-    return () => {
-      removeEventListener("detailGame", detailGame);
-    };
-  }, [addEventListener, removeEventListener, detailGame]);
   return (
     <section className="home section">
       <div
@@ -87,7 +75,7 @@ const Home = () => {
           <button></button>
         </div>
       </div>
-      <button onClick={() => ConnectUser('93f9f23c-c4f6-4cd0-b55c-e98a588a8467', 'owner')}>Start</button>
+      <button onClick={() => ConnectUser(getGet("lobby").split('?')[0], getGet("status"))}>Start</button>
       <div id="unity-container" className="unity-desktop" ref={unityContainerRef}>
         
         <Unity
