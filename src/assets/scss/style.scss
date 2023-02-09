@@ -39,7 +39,8 @@
   left: 0;
   right: 0;
   height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 30vh;
   transition: .4s;
   padding: 0;
 }

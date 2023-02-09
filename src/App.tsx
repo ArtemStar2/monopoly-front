@@ -10,7 +10,6 @@ import Lobby from './pages/Lobby';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import ProfileFriends from './pages/ProfileFriends';
-
 import { fetchCurrencies } from './store/reducers/currencysReducer/ActionCreators';
 import { profileSlice } from './store/reducers/profileReducer';
 function App() {
@@ -56,9 +55,7 @@ function App() {
         </Route>
       </Route>
     ) : (
-      <> 
-      <Route path="" element={<Register updateCookie={updateCookie} />} />     
-      </>
+      <Route path="" element={<Register updateCookie={updateCookie} />} />   
     )}
     <Route path="auth" element={<Register updateCookie={updateCookie} />} />
     <Route path="*" element={<Navigate to={""} />} />
