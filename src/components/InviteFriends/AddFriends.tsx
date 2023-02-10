@@ -43,7 +43,7 @@ const AddFriends = () => {
       
     });
   }, []);
-  console.log(friends);
+  // console.log(friends);
   return (
     <div className="invite-friends__board-add-friends">
       <div className="invite-friends__board-container">

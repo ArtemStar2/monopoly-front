@@ -32,13 +32,14 @@ const Friend = (data: any) => {
             data.listFriends();
         });
     }
-    const ClickApprove = async () => {
+    const ClickApprove = async (bool:boolean) => {
         fetch('https://api.monopoly-dapp.com/friends/approve/?id=' + data.props.id, { 
             method: "POST",
             headers: {
               'accept': 'application/json',
               'Authorization': data.token,
-          },
+            },
+            body: 'isSpproved='+ (bool ? "true" : "false"),
         })
         .then(response => response.json())
         .then(json => {
@@ -64,8 +65,8 @@ const Friend = (data: any) => {
                 if (data.props.status == "requested") {
                     return (
                         <div className='plus-minus'>
-                            <div className='plus-friends cont-button' onClick={() => ClickApprove()}></div>
-                            <div className='minus-friends cont-button' onClick={() => ClickDelete()}></div>
+                            <div className='plus-friends cont-button' onClick={() => ClickApprove(true)}></div>
+                            <div className='minus-friends cont-button' onClick={() => ClickApprove(false)}></div>
                         </div>
                     )
                 } else if (data.props.status == "added") {
