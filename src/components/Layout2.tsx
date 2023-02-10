@@ -261,33 +261,57 @@ const Layout2 = (buff:any) => {
   
   const connectLobby = async () => {    
     try {
-      fetch('https://api.monopoly-dapp.com/lobby/play/?link='+ buff.buff.lobbyId, { 
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': token,
-        },
-        body: JSON.stringify({
-          'bet': buff.buff.bet,
-          'password': connectLobbyCode,
+      if(isShowAreYouReady){
+        fetch('https://api.monopoly-dapp.com/lobby/play/?link='+ buff.buff.lobbyId, { 
+          method: 'POST',
+          headers: {
+              'accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token,
+          },
+          body: JSON.stringify({
+            'bet': buff.buff.bet,
+            'password': connectLobbyCode,
+          })
         })
-      })
-      .then(response => response.json())
-      .then(json => {
-        if(json.detail){
-          console.error('error: ' + json.detail);
-        }else{
-          if(isShowAreYouReady){
+        .then(response => response.json())
+        .then(json => {
+          if(json.detail){
+            console.error('error: ' + json.detail);
+          }else{
             console.log(json);
             startGame(buff.buff.lobbyId, 'opponent');
             setConnectLobbyCode('');
-          }else{
-            openPrivateGamePopup(false);
-            toggleAreYouReadyPopup(true);
+            if(isShowAreYouReady){
+              
+            }else{
+              openPrivateGamePopup(false);
+              toggleAreYouReadyPopup(true);
+            }
           }
-        }
-      });
+        });
+      }else{
+        fetch('https://api.monopoly-dapp.com/lobby/'+ buff.buff.lobbyId, { 
+          method: 'GET',
+          headers: {
+              'accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token,
+          },
+        })
+        .then(response => response.json())
+        .then(json => {
+          if(json.detail){
+            console.error('error: ' + json.detail);
+          }else{
+            console.log(json);
+            if(json.password == connectLobbyCode){
+              openPrivateGamePopup(false);
+              toggleAreYouReadyPopup(true);
+            }
+          }
+        });
+      }
     } catch (error) {
       console.log(error);
     }
