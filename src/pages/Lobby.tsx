@@ -29,26 +29,6 @@ const Lobby = (dataLobby :any) => {
     } catch (error) {
       console.log(error);
     }
-    const interval = setInterval(() => {
-      try {
-        fetch('https://api.monopoly-dapp.com/lobby/', { 
-          method: 'GET',
-          headers: {
-              'accept': 'application/json',
-              'Authorization': token,
-          },
-        })
-        .then(response => response.json())
-        .then(json => {
-          if(json.length != lobby.length){
-            setLobby(json);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }, 1000);
-    return () => clearInterval(interval);
   }, []);
   return (
     <section className="section lobby">
