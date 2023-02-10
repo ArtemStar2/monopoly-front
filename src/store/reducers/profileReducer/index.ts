@@ -32,7 +32,6 @@ export const profileSlice = createSlice({
       state.username = action.payload.username;
       state.avatar = action.payload.avatar;
       state.balanceETH = parseInt(action.payload.balance);
-      state.balanceUSD = parseInt(action.payload.balance) * 1500;
       state.score = parseInt(action.payload.score);
       state.walletAddress = action.payload.walletAddress;
       state.friends = action.payload.friends;
