@@ -19,20 +19,22 @@ function App() {
   // const isAuth = useAppSelector((state) => state.authReducer.isAuth);
   const [buff, setBuff] = useState('');
   const { setUsersData } = profileSlice.actions;
-  // console.log(isAuth);
-  // get current price eth to usd
   useEffect(() => {
     if(value){
-      fetch('https://api.monopoly-dapp.com/users/', { 
-        headers: {
-            'accept': 'application/json',
-            'Authorization': value,
-        },
-      })
-      .then(response => response.json())
-      .then(json => {
-        dispatch(setUsersData(json));
-      });
+      try {
+        fetch('https://api.monopoly-dapp.com/users/', { 
+          headers: {
+              'accept': 'application/json',
+              'Authorization': value,
+          },
+        })
+        .then(response => response.json())
+        .then(json => {
+          dispatch(setUsersData(json));
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
     dispatch(
       fetchCurrencies({
@@ -41,7 +43,6 @@ function App() {
       }),
     );
   }, []);
-  console.log('да наконец');
   return (
     <Routes>
     {value ? (
