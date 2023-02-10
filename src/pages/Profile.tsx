@@ -16,6 +16,7 @@ const Profile = (state:any) => {
   const [image, setImage] = useState(users.avatar);
   const [name, setName] = useState(users.username);
   const token: any = useCookie('refresh_token_cookie','')[0];
+  
   if(!users.username){
     const Profile = async () => {
       fetch('https://api.monopoly-dapp.com/users/', { 
@@ -127,9 +128,38 @@ const Profile = (state:any) => {
         }
       }
   }
-  
+
+
+  const [balance, setBalance] = useState('');
+
+  const inputBalance = async (value: string) => {
+      try {
+        console.log(value);
+        fetch('https://api.monopoly-dapp.com/users/', { 
+          method: 'PUT',
+          headers: {
+              'accept': 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': token,
+          },
+          body: 'balance=' + value,
+        })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+          // alert(JSON.stringify(json, null, 2));
+          dispatch(setUsersData(json));
+        });
+    } catch (error) {
+    console.log(error);
+    } 
+  }
+
   return (
     <section className="profile section">
+      <div>
+        <input type="text" value={balance} onBlur={e => inputBalance(e.target.value)} onChange={e => setBalance(e.target.value)}/>
+      </div>
       <div className="profile__container">
         <div className="profile__row ">
           <label className="profile__column myPhoto">
