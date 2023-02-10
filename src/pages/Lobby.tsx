@@ -10,7 +10,7 @@ const Lobby = (dataLobby :any) => {
     useOutletContext<any>();
   const userId = profileUsers((state) => state.profileReducer.id);
   const [lobby, setLobby] = useState(Array());
-  const token: any = useCookie('access_token','')[0];
+  const token: any = useCookie('refresh_token_cookie','')[0];
   useEffect(() => {
     try {
       fetch('https://api.monopoly-dapp.com/lobby/', { 
