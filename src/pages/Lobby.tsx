@@ -24,6 +24,8 @@ const Lobby = (dataLobby :any) => {
       .then(json => {
         if(json.length != lobby.length){
           setLobby(json);
+        }else{
+          console.log(json);
         }
       });
     } catch (error) {
