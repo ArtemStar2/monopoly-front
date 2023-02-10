@@ -82,6 +82,7 @@ const Profile = (state:any) => {
     }else{
       if(value != users.username){
         setName(value);
+      try {
         fetch('https://api.monopoly-dapp.com/users/', { 
           method: 'PUT',
           headers: {
@@ -97,6 +98,9 @@ const Profile = (state:any) => {
           // alert(JSON.stringify(json, null, 2));
           dispatch(setUsersData(json));
         });
+      } catch (error) {
+        console.log(error);
+      }
       }
     }
   }
@@ -107,16 +111,20 @@ const Profile = (state:any) => {
       if (files && files.length !== 0) {
         const formData = new FormData();
         formData.append('avatar', files[0]);
-        const res = await fetch("https://api.monopoly-dapp.com/users/", {
-          method: "PUT",
-          headers: {
-            'accept': 'application/json',
-            'Authorization': token,
-          },
-          body: formData,
-        }).then((res) => res.json());
-        setImage(res.avatar);
-        dispatch(setUsersData(res));
+        try {
+          const res = await fetch("https://api.monopoly-dapp.com/users/", {
+            method: "PUT",
+            headers: {
+              'accept': 'application/json',
+              'Authorization': token,
+            },
+            body: formData,
+          }).then((res) => res.json());
+          setImage(res.avatar);
+          dispatch(setUsersData(res));
+        } catch (error) {
+          console.log(error);
+        }
       }
   }
   

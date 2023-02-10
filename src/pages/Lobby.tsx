@@ -12,20 +12,7 @@ const Lobby = (dataLobby :any) => {
   const [lobby, setLobby] = useState(Array());
   const token: any = useCookie('refresh_token_cookie','')[0];
   useEffect(() => {
-    fetch('https://api.monopoly-dapp.com/lobby/', { 
-      method: 'GET',
-      headers: {
-          'accept': 'application/json',
-          'Authorization': token,
-      },
-    })
-    .then(response => response.json())
-    .then(json => {
-      if(json.length != lobby.length){
-        setLobby(json);
-      }
-    });
-    const interval = setInterval(() => {
+    try {
       fetch('https://api.monopoly-dapp.com/lobby/', { 
         method: 'GET',
         headers: {
@@ -39,6 +26,27 @@ const Lobby = (dataLobby :any) => {
           setLobby(json);
         }
       });
+    } catch (error) {
+      console.log(error);
+    }
+    const interval = setInterval(() => {
+      try {
+        fetch('https://api.monopoly-dapp.com/lobby/', { 
+          method: 'GET',
+          headers: {
+              'accept': 'application/json',
+              'Authorization': token,
+          },
+        })
+        .then(response => response.json())
+        .then(json => {
+          if(json.length != lobby.length){
+            setLobby(json);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }, 1000);
     return () => clearInterval(interval);
   }, []);

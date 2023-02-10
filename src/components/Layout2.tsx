@@ -214,32 +214,36 @@ const Layout2 = (buff:any) => {
   const createLobby = async () => {
     let userBet = lobbyPrice;
     if(userBet){
-      fetch('https://api.monopoly-dapp.com/lobby/?link=' + linkCode, { 
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': token,
-        },
-        body: JSON.stringify({
-          'bet': lobbyPrice,
-          'password': lobbyCode,
+      try {
+        fetch('https://api.monopoly-dapp.com/lobby/?link=' + linkCode, { 
+          method: 'POST',
+          headers: {
+              'accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token,
+          },
+          body: JSON.stringify({
+            'bet': lobbyPrice,
+            'password': lobbyCode,
+          })
         })
-      })
-      .then(response => response.json())
-      .then(json => {
-        if(!json.detail){
-          setLobbyCode('');
-          setLinkCode(generateUUID());
-          setLobbyPrice('');
-          setActivePrivate(false);
-          setIsShowCreateYourRoom(false);
-          console.log(json);
-          startGame(json.id, 'owner');
-        }else{
-          alert(json.detail);
-        }
-      });
+        .then(response => response.json())
+        .then(json => {
+          if(!json.detail){
+            setLobbyCode('');
+            setLinkCode(generateUUID());
+            setLobbyPrice('');
+            setActivePrivate(false);
+            setIsShowCreateYourRoom(false);
+            console.log(json);
+            startGame(json.id, 'owner');
+          }else{
+            alert(json.detail);
+          }  
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }else{
       console.log('error');
     }
@@ -256,6 +260,7 @@ const Layout2 = (buff:any) => {
   const [connectLobbyCode, setConnectLobbyCode] = useState('');
   
   const connectLobby = async () => {    
+    try {
       fetch('https://api.monopoly-dapp.com/lobby/play/?link='+ buff.buff.lobbyId, { 
         method: 'POST',
         headers: {
@@ -283,7 +288,9 @@ const Layout2 = (buff:any) => {
           }
         }
       });
-
+    } catch (error) {
+      console.log(error);
+    }
   }
   const navigate = useNavigate();
   const startGame = async (id:any,roll:string) => {
