@@ -238,7 +238,7 @@ const Layout2 = (buff:any) => {
             console.log(json);
             startGame(json.id, 'owner');
           }else{
-            alert(json.detail);
+            console.log(json.detail);
           }  
         });
       } catch (error) {

@@ -185,6 +185,25 @@
   position: absolute;
   bottom: -25px;
 }
+
+.leaderboard__ranking-place img:nth-child(2){
+  position: relative;
+  @include adaptiv-value('width', 110, 30, 0);
+  @include adaptiv-value('height', 110, 30, 0);
+  border-radius: 50%;
+}
+.leaderboard__ranking-img-first-place img:nth-child(2){
+  @include adaptiv-value('width', 130, 50, 0);
+  @include adaptiv-value('height', 130, 50, 0);
+}
+.leaderboard__ranking-img{
+
+  @include adaptiv-value('padding-top', 40, 20, 0);
+}
+.leaderboard__ranking-img-first-place{
+
+  @include adaptiv-value('padding-top', 55, 20, 0);
+}
 @media(max-width: 1024px){
   .soloFriends .myPhoto{
     margin-bottom: 25px !important;

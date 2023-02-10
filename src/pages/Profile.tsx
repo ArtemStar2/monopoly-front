@@ -145,7 +145,6 @@ const Profile = (state:any) => {
             <p className="profile__score">Score {users.score}</p>
             <p className="profile__address" onClick={() => {
               navigator.clipboard.writeText(adress);
-              alert('Copy address');
             }}>Copy address [{adress.substring(0, 5)}...{adress.substring(adress.length - 4)}]</p>
           </div>
           <Link to="/">

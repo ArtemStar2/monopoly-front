@@ -51,12 +51,13 @@ const Home = () => {
     var s = window.location.search.match(new RegExp(name + '=([^&=]+)'));
     return s ? s[1] : '';
   }
+  const token: any = useCookie('refresh_token_cookie','')[0].split(' ')[1];
   if(getGet("lobby") && isLoaded){
-    ConnectUser(getGet("lobby").split('?')[0], getGet("status"));
+    ConnectUser(getGet("lobby").split('?')[0], getGet("status"),token);
   }
-  function ConnectUser(lobby:any, roll:any){
-    console.log( lobby + ":" + roll);
-    sendMessage("ApiClient", "SetData", lobby + ":" + roll);
+  function ConnectUser(lobby:any, roll:any, tokenUser:any){
+    console.log(lobby + ":" + roll+ ":" + tokenUser);
+    sendMessage("ApiClient", "SetData", lobby + ":" + roll+ ":" + tokenUser);
   }
   const loadingPercentage: number = Math.round(loadingProgression * 100);
 
@@ -75,7 +76,7 @@ const Home = () => {
           <button></button>
         </div>
       </div>
-      <button onClick={() => ConnectUser(getGet("lobby").split('?')[0], getGet("status"))}>Start</button>
+      <button onClick={() => ConnectUser(getGet("lobby").split('?')[0], getGet("status"),token)}>Start</button>
       <div id="unity-container" className="unity-desktop" ref={unityContainerRef}>
         
         <Unity

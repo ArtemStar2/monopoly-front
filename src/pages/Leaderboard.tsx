@@ -2,8 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import crownFirstPlace from './../assets/images/Crown_1st.png';
+import crownFirstPlace2 from './../assets/images/Crown_2nd.png';
+import crownFirstPlace3 from './../assets/images/Crown_3rd.png';
 import baseCircle from './../assets/images/Base_circle.png';
 import maskProfilePick from './../assets/images/Mask-ProfilePic.png';
+import baseCircle2 from './../assets/images/2ndBase_circle.png';
+import baseCircle3 from './../assets/images/3rdBase_circle.png';
 import {profileUsers,useCookie } from '../hooks/hooks';
 const Leaderboard = () => {
   const [usersTop, setUserTop] = useState(Array());
@@ -43,9 +47,9 @@ const Leaderboard = () => {
             <div className="leaderboard__ranking d-f ai-c jc-sb">
               <div className="leaderboard__ranking-place leaderboard__ranking-second-place">
                 <div className="leaderboard__ranking-img">
-                  <img src={crownFirstPlace} alt="crown" />
-                  <img src={maskProfilePick} alt="mask profile pick" />
-                  <img src={baseCircle} alt="base circle" />
+                  <img src={crownFirstPlace2} alt="crown" />
+                  <img src={usersTop[1]?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"} alt="mask profile pick" />
+                  <img src={baseCircle2} alt="base circle" />
                 </div>
                 <p className="leaderboard__ranking-name">{usersTop[1]?.username}</p>
                 <p className="leaderboard__ranking-score">{usersTop[1]?.highest_score}</p>
@@ -53,7 +57,7 @@ const Leaderboard = () => {
               <div className="leaderboard__ranking-place leaderboard__ranking-first-place">
                 <div className="leaderboard__ranking-img leaderboard__ranking-img-first-place">
                   <img src={crownFirstPlace} alt="crown" />
-                  <img src={maskProfilePick} alt="mask profile pick" />
+                  <img src={usersTop[0]?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"} alt="mask profile pick" />
                   <img src={baseCircle} alt="base circle" />
                 </div>
                 <p className="leaderboard__ranking-name">{usersTop[0]?.username}</p>
@@ -61,9 +65,9 @@ const Leaderboard = () => {
               </div>
               <div className="leaderboard__ranking-place leaderboard__ranking-third-place">
                 <div className="leaderboard__ranking-img">
-                  <img src={crownFirstPlace} alt="crown" />
-                  <img src={maskProfilePick} alt="mask profile pick" />
-                  <img src={baseCircle} alt="base circle" />
+                  <img src={crownFirstPlace3} alt="crown" />
+                  <img src={usersTop[2]?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"} alt="mask profile pick" />
+                  <img src={baseCircle3} alt="base circle" />
                 </div>
                 <p className="leaderboard__ranking-name">{usersTop[2]?.username}</p>
                 <p className="leaderboard__ranking-score">{usersTop[2]?.highest_score}</p>
@@ -84,7 +88,7 @@ const Leaderboard = () => {
                     </div>
                     <div className="leaderboard__board-column d-f ai-c">
                       <img
-                        src="https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"
+                        src={userItem?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"}
                         alt="avatar"
                       />
                       <b>{userItem.username}</b>
