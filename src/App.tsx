@@ -52,6 +52,7 @@ function App() {
           <Route path="game" element={<Home />} />
           <Route path="invite-friends" element={<InviteFriends />} />
           <Route path="leaderboard" element={<Leaderboard />} />
+          <Route path="leaderboard/:id" element={<ProfileFriends deleteCookie={deleteCookie}/>} />
           <Route path="profile" element={<Profile deleteCookie={deleteCookie}/>} />
           <Route path="invite-friends/:id" element={<ProfileFriends deleteCookie={deleteCookie}/>} />
         </Route>

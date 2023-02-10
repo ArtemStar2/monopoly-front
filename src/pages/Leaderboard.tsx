@@ -8,6 +8,7 @@ import baseCircle from './../assets/images/Base_circle.png';
 import maskProfilePick from './../assets/images/Mask-ProfilePic.png';
 import baseCircle2 from './../assets/images/2ndBase_circle.png';
 import baseCircle3 from './../assets/images/3rdBase_circle.png';
+import { Link } from 'react-router-dom';
 import {profileUsers,useCookie } from '../hooks/hooks';
 const Leaderboard = () => {
   const [usersTop, setUserTop] = useState(Array());
@@ -51,7 +52,7 @@ const Leaderboard = () => {
                   <img src={usersTop[1]?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"} alt="mask profile pick" />
                   <img src={baseCircle2} alt="base circle" />
                 </div>
-                <p className="leaderboard__ranking-name">{usersTop[1]?.username}</p>
+                <Link to={usersTop[1]?.id + "/"} className="leaderboard__ranking-name">{usersTop[1]?.username}</Link>
                 <p className="leaderboard__ranking-score">{usersTop[1]?.highest_score}</p>
               </div>
               <div className="leaderboard__ranking-place leaderboard__ranking-first-place">
@@ -60,7 +61,7 @@ const Leaderboard = () => {
                   <img src={usersTop[0]?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"} alt="mask profile pick" />
                   <img src={baseCircle} alt="base circle" />
                 </div>
-                <p className="leaderboard__ranking-name">{usersTop[0]?.username}</p>
+                <Link to={usersTop[0]?.id + "/"} className="leaderboard__ranking-name">{usersTop[0]?.username}</Link>
                 <p className="leaderboard__ranking-score">{usersTop[0]?.highest_score}</p>
               </div>
               <div className="leaderboard__ranking-place leaderboard__ranking-third-place">
@@ -69,7 +70,7 @@ const Leaderboard = () => {
                   <img src={usersTop[2]?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"} alt="mask profile pick" />
                   <img src={baseCircle3} alt="base circle" />
                 </div>
-                <p className="leaderboard__ranking-name">{usersTop[2]?.username}</p>
+                <Link to={usersTop[2]?.id + "/"} className="leaderboard__ranking-name">{usersTop[2]?.username}</Link>
                 <p className="leaderboard__ranking-score">{usersTop[2]?.highest_score}</p>
               </div>  
               
@@ -86,13 +87,13 @@ const Leaderboard = () => {
                     <div className="leaderboard__board-column">
                       <b>{userItem.rank}</b>
                     </div>
-                    <div className="leaderboard__board-column d-f ai-c">
+                    <Link to={userItem?.id + "/"} className="leaderboard__board-column d-f ai-c">
                       <img
                         src={userItem?.avatar ?? "https://forkast.news/wp-content/uploads/2022/03/NFT-Avatar.png"}
                         alt="avatar"
                       />
                       <b>{userItem.username}</b>
-                    </div>
+                    </Link>
                     <div className="leaderboard__board-column">
                       <b>{userItem.highest_score}</b>
                     </div>

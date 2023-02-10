@@ -197,7 +197,7 @@
   @include adaptiv-value('height', 130, 50, 0);
 }
 .leaderboard__ranking-img{
-
+  margin: 0 auto;
   @include adaptiv-value('padding-top', 40, 20, 0);
 }
 .leaderboard__ranking-img-first-place{
@@ -1931,6 +1931,8 @@
     @include adaptiv-value('font-size', 24, 14, 0);
     margin-bottom: 5px;
     font-weight: 700;
+    position: relative;
+    z-index: 10;
     color: #000;
   }
 
@@ -2009,6 +2011,7 @@
   // .leaderboard__board-column
 
   &__board-column {
+    color: #000;
     display: flex;
     justify-content: center;
     font-weight: 600;
