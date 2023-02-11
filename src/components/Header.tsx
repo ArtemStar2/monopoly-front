@@ -9,6 +9,7 @@ interface IHeader {
   toggleDepositFundsPopup: (isCloseOrOpen: boolean) => void;
   toggleTotalBalancePopup: (isCloseOrOpen: boolean) => void;
   toggleNavbar: (isCloseOrOpen: boolean) => void;
+  CloseGame: () => void;
 }
 
 const Header: FC<IHeader> = ({
@@ -16,6 +17,7 @@ const Header: FC<IHeader> = ({
   toggleDepositFundsPopup,
   toggleTotalBalancePopup,
   toggleNavbar,
+  CloseGame,
 }) => {
   const balanceETH = useAppSelector((state) => state.profileReducer.balanceETH);
   const balanceUSD = useAppSelector((state) => state.profileReducer.balanceUSD);
@@ -25,17 +27,17 @@ const Header: FC<IHeader> = ({
       <div className="header__row d-f ai-c jc-sb">
         <div className="header__left d-f ai-c">
           <p>
-            <a className="link" href="#">
+            <a className="link" href="#" onClick={CloseGame}>
               Play-to-earn
             </a>
           </p>
           <p>
-            <Link className="d-f ai-c" to="leaderboard">
+            <Link className="d-f ai-c" to="leaderboard" onClick={CloseGame}>
               Leaderboard
             </Link>
           </p>
           <p className="logo">
-            <a href="#">
+            <a href="#" onClick={CloseGame}>
               <img src={logo} alt="logo" />
             </a>
           </p>
@@ -71,7 +73,7 @@ const Header: FC<IHeader> = ({
             </a>
           </p>
           <p className='header_user'>
-            <Link className="d-f ai-c" to="profile">
+            <Link className="d-f ai-c" to="profile" onClick={CloseGame}>
               <span>{username}</span>
               <span></span>
             </Link>

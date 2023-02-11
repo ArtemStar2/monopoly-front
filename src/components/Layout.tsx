@@ -4,7 +4,7 @@ import { useAppSelector, useOutside } from '../hooks/hooks';
 import Header from './Header';
 import Navbar from './Navbar';
 
-const Layout = () => {
+const Layout = (props:any) => {
   // deposit funds popup
   const {
     ref: refDepositFunds,
@@ -71,8 +71,9 @@ const Layout = () => {
     <>
       <div className="main">
         <div className="main__row d-g">
-          <Navbar refNavbar={refNavbar} isShowNavbar={isShowNavbar} toggleNavbar={toggleNavbar} />
+          <Navbar CloseGame={props.CloseGame} refNavbar={refNavbar} isShowNavbar={isShowNavbar} toggleNavbar={toggleNavbar} />
           <Header
+            CloseGame={props.CloseGame}
             toggleDepositFundsPopup={toggleDepositFundsPopup}
             toggleTotalBalancePopup={toggleTotalBalancePopup}
             toggleNavbar={toggleNavbar}

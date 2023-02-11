@@ -7,7 +7,7 @@ import { useOutside, useWindowSize,useCookie,profileUsers } from '../hooks/hooks
 import Navbar from '../components/Navbar';
 import Lobby from './Lobby';
 
-const Home = () => {
+const Home = (props:any) => {
   const [unityContainerHeight, setInityContainerHeight] = useState<number>(0);
   const [unityContainerWidth, setInityContainerWidth] = useState<number>(0);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
@@ -37,29 +37,23 @@ const Home = () => {
     }
   }, [windowWidth, windowHeight]);
 
-  const { unityProvider, isLoaded, loadingProgression, sendMessage } = useUnityContext({
-    loaderUrl: '/Build/MonopolyBuild.loader.js',
-    dataUrl: '/Build/MonopolyBuild.data',
-    frameworkUrl: '/Build/MonopolyBuild.framework.js',
-    codeUrl: '/Build/MonopolyBuild.wasm',
-    streamingAssetsUrl: 'StreamingAssets',
-    companyName: 'DefaultCompany',
-    productName: 'Metamonopoly',
-    productVersion: '1.0',
-  });
+  
   function getGet(name:any){
     var s = window.location.search.match(new RegExp(name + '=([^&=]+)'));
     return s ? s[1] : '';
   }
   const token: any = useCookie('refresh_token_cookie','')[0].split(' ')[1];
-  if(getGet("lobby") && isLoaded){
-    ConnectUser(getGet("lobby").split('?')[0], getGet("status"),token);
+  if(getGet("lobby") && props.isLoaded){
+    let status = getGet("status") == "" ? 'opponent' : getGet("status");
+    console.log(status);
+    ConnectUser(getGet("lobby").split('?')[0], status,token);
   }
   function ConnectUser(lobby:any, roll:any, tokenUser:any){
     console.log(lobby + ":" + roll+ ":" + tokenUser);
-    sendMessage("ApiClient", "SetData", lobby + ":" + roll+ ":" + tokenUser);
+    props.sendMessage("ApiClient", "SetData", lobby + ":" + roll+ ":" + tokenUser);
   }
-  const loadingPercentage: number = Math.round(loadingProgression * 100);
+
+  const loadingPercentage: number = Math.round(props.loadingProgression * 100);
 
   return (
     <section className="home section">
@@ -76,11 +70,9 @@ const Home = () => {
           <button></button>
         </div>
       </div>
-      <button onClick={() => ConnectUser(getGet("lobby").split('?')[0], getGet("status"),token)}>Start</button>
       <div id="unity-container" className="unity-desktop" ref={unityContainerRef}>
-        
         <Unity
-          unityProvider={unityProvider}
+          unityProvider={props.unityProvider}
           style={{
             background: '#1F1F20',
             width: `${unityContainerWidth}px`,
@@ -90,7 +82,8 @@ const Home = () => {
             top: '0',
           }}
         />
-        {isLoaded === false && (
+        
+        {props.isLoaded === false && (
           <div id="unity-loading-bar">
             <div id="unity-logo"></div>
             <div id="unity-progress-bar-empty">

@@ -318,7 +318,8 @@ const Layout2 = (buff:any) => {
   }
   const navigate = useNavigate();
   const startGame = async (id:any,roll:string) => {
-    navigate("/game/?lobby=" + id + "&status=" + roll);
+    window.location.href = "/game/?lobby=" + id + "&status=" + roll;
+    // navigate("/game/?lobby=" + id + "&status=" + roll);
   }
   return (
     <>

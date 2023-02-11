@@ -12,6 +12,10 @@ import Register from './pages/Register';
 import ProfileFriends from './pages/ProfileFriends';
 import { fetchCurrencies } from './store/reducers/currencysReducer/ActionCreators';
 import { profileSlice } from './store/reducers/profileReducer';
+import { useUnityContext  } from 'react-unity-webgl';
+
+var CloseGame:any;
+
 function App() {
   const dispatch = useAppDispatch();
 
@@ -43,13 +47,29 @@ function App() {
       }),
     );
   }, []);
+  // ------------
+  const { unityProvider, isLoaded, loadingProgression, sendMessage } = useUnityContext({
+    loaderUrl: '/Build/MonopolyBuild.loader.js',
+    dataUrl: '/Build/MonopolyBuild.data',
+    frameworkUrl: '/Build/MonopolyBuild.framework.js',
+    codeUrl: '/Build/MonopolyBuild.wasm',
+    streamingAssetsUrl: 'StreamingAssets',
+    companyName: 'DefaultCompany',
+    productName: 'Metamonopoly',
+    productVersion: '1.0',
+  });
+  function CloseGame(){
+    sendMessage("ApiClient", "CloseGame", );
+  }
+  // window.location.href = '/game/';
+  // ------------
   return (
     <Routes>
     {value ? (
-      <Route path="" element={<Layout />}>
+      <Route path="" element={<Layout CloseGame={CloseGame} />}>
         <Route path="" element={<Layout2 buff={buff} />}>
           <Route path="" element={<Lobby funbuff={setBuff} />} />
-          <Route path="game" element={<Home />} />
+          <Route path="game" element={<Home unityProvider={unityProvider} isLoaded={isLoaded} loadingProgression={loadingProgression} sendMessage={sendMessage}/>} />
           <Route path="invite-friends" element={<InviteFriends />} />
           <Route path="leaderboard" element={<Leaderboard />} />
           <Route path="leaderboard/:id" element={<ProfileFriends deleteCookie={deleteCookie}/>} />
