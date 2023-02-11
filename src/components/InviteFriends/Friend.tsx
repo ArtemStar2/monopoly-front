@@ -33,16 +33,16 @@ const Friend = (data: any) => {
         });
     }
     const ClickApprove = async (bool:boolean) => {
-        fetch('https://api.monopoly-dapp.com/friends/approve/?id=' + data.props.id, { 
+        fetch('https://api.monopoly-dapp.com/friends/approve/?id=' + data.props.id + '&isApproved='+ (bool ? "true" : "false"), { 
             method: "POST",
             headers: {
               'accept': 'application/json',
               'Authorization': data.token,
             },
-            body: JSON.stringify({
-                'isSpproved': bool,
-            })
-            // body: 'isSpproved='+ (bool ? "true" : "false"),
+            // body: JSON.stringify({
+            //     'isApproved': bool,
+            // })
+            // body: 'isApproved='+ (bool ? "true" : "false"),
         })
         .then(response => response.json())
         .then(json => {
