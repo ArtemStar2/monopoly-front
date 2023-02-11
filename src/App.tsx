@@ -48,11 +48,16 @@ function App() {
     );
   }, []);
   // ------------
+  function getGet(name:any){
+    var s = window.location.search.match(new RegExp(name + '=([^&=]+)'));
+    return s ? s[1] : '';
+  }
+  
   const { unityProvider, isLoaded, loadingProgression, sendMessage } = useUnityContext({
-    loaderUrl: '/Build/MonopolyBuild.loader.js',
-    dataUrl: '/Build/MonopolyBuild.data',
-    frameworkUrl: '/Build/MonopolyBuild.framework.js',
-    codeUrl: '/Build/MonopolyBuild.wasm',
+    loaderUrl: getGet("lobby") ? '/Build/MonopolyBuild.loader.js' : '/MonopolyBuildSolo/Build/MonopolyBuild.loader.js',
+    dataUrl: getGet("lobby") ? '/Build/MonopolyBuild.data' : '/MonopolyBuildSolo/Build/MonopolyBuild.data',
+    frameworkUrl: getGet("lobby") ? '/Build/MonopolyBuild.framework.js' : '/MonopolyBuildSolo/Build/MonopolyBuild.framework.js',
+    codeUrl: getGet("lobby") ? '/Build/MonopolyBuild.wasm' : '/MonopolyBuildSolo/Build/MonopolyBuild.wasm',
     streamingAssetsUrl: 'StreamingAssets',
     companyName: 'DefaultCompany',
     productName: 'Metamonopoly',
